@@ -1,14 +1,17 @@
 using System.Collections;
+using ChecklistAPI.Data;
 using ChecklistAPI.Domain;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace ChecklistAPI.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class ListController(ILogger<ListController> logger) : ControllerBase
+public class ListController(ILogger<ListController> logger, ChecklistDbContext dbContext) : ControllerBase
 {
-    // private readonly IRepository<User> _userRepository;
+    private readonly ChecklistDbContext _dbContext = dbContext;
+    private readonly ILogger<ListController> _logger = logger;
 
     // TODO replace with repo pattern
     private static readonly ListItem[] ListItems =
@@ -56,8 +59,6 @@ public class ListController(ILogger<ListController> logger) : ControllerBase
         },
     ];
 
-    private readonly ILogger<ListController> _logger = logger;
-
     // for a given list id, get all items for that list
     [HttpGet("{id}")]
     public IActionResult GetById(Guid id)
@@ -65,5 +66,12 @@ public class ListController(ILogger<ListController> logger) : ControllerBase
         return Ok(ListItems);
         // var user = await _userRepository.GetByIdAsync(id);
         // return user == null ? NotFound() : Ok(user);
+    }
+
+    [HttpGet]
+    public async Task<ActionResult<IEnumerable<ListItem>>> Get()
+    {
+        var items = await _dbContext.Item.ToListAsync();
+        return items;
     }
 }

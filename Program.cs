@@ -1,8 +1,12 @@
+using ChecklistAPI.Data;
+using Microsoft.EntityFrameworkCore;
+// using EFCore.NamingConventions;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
+builder.Services.AddDbContext<ChecklistDbContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")).UseSnakeCaseNamingConvention());
 builder.Services.AddControllers();
+
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
