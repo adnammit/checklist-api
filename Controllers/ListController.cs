@@ -13,7 +13,6 @@ public class ListController(ILogger<ListController> logger, ChecklistDbContext d
     private readonly ChecklistDbContext _dbContext = dbContext;
     private readonly ILogger<ListController> _logger = logger;
 
-    // TODO replace with repo pattern
     private static readonly ListItem[] ListItems =
     [
         new ListItem {
