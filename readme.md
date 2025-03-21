@@ -1,6 +1,6 @@
 # ChecklistAPI
 
-### Manual commands
+## Hand-Rolled Docker Commands
 ```sh
 # build the image
 docker build -t checklist-api .
@@ -11,7 +11,7 @@ docker-compose -f docker-compose.debug.yml up --build -d
 ```
 
 ## Documentation
-(only work outside docker for now)
+(when running outside of docker)
 https://localhost:7092/swagger
 https://localhost:7092/openapi/v1.json
 
