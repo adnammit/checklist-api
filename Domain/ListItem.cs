@@ -7,4 +7,5 @@ public class ListItem : BaseEntity
 	public int? Quantity { get; set; }
 	public string? Category { get; set; }
 	public bool Completed { get; set; }
+	public int ListId { get; set; }
 }
