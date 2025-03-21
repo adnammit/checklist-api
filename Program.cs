@@ -1,4 +1,5 @@
 using ChecklistAPI.Data;
+using Scalar.AspNetCore;
 using Microsoft.EntityFrameworkCore;
 
 var corsLocalhostPolicy = "LocalhostPolicy";
@@ -12,12 +13,12 @@ if (builder.Environment.IsDevelopment())
     builder.Services.AddCors(options =>
     {
         options.AddPolicy(name: corsLocalhostPolicy,
-            policy =>
-            {
-                policy.WithOrigins("http://localhost:3000")
-                      .AllowAnyHeader()
-                      .AllowAnyMethod();
-            });
+        policy =>
+        {
+            policy.WithOrigins("http://localhost:3000")
+                  .AllowAnyHeader()
+                  .AllowAnyMethod();
+        });
     });
 }
 
@@ -35,10 +36,14 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
-    app.UseSwaggerUi(options =>
+    app.MapScalarApiReference(options =>
     {
-        options.DocumentPath = "/openapi/v1.json";
+        options.Servers = [new ScalarServer("http://localhost:5064")];
     });
+    // app.UseSwaggerUi(options =>
+    // {
+    //     options.DocumentPath = "/openapi/v1.json";
+    // });
 }
 
 app.UseHttpsRedirection();
